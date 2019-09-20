@@ -33,13 +33,34 @@ console.log("this is E", e)
     //   )
       // props.history.push(`colors/${colors.id}`);
     })
-    .catch(error => console.log("error from put req", error))
-
-
-  
-
 
   };
+
+
+
+  const add = e => {
+    e.preventDefault();
+    // Make a put request to save your updated color
+    // think about where will you get the id from...
+    // where is is saved right now?
+    axiosWithAuth()
+    .post(`/colors/`, colorToEdit) //where do we get the ID from? not index
+    .then(res =>{
+      console.log(res.data, "resdata inside put colorlist page");
+      updateColors([...colors.filter(color => color.id !== colors.id), res.data])
+    //   updateColors([...colors.filter(e => e.id !== color.id), res.data]
+    //   )
+      // props.history.push(`colors/${colors.id}`);
+    })
+
+  };
+
+
+
+
+
+
+
 
   const deleteColor = color => {
     // make a delete request to delete this color
@@ -72,6 +93,43 @@ console.log("this is E", e)
             />
           </li>
         ))}
+       
+
+
+
+       {/* <form onSubmit={add}>
+          <legend>ADD COLOR</legend>
+          <label>
+            color name:
+            <input
+              onChange={e =>
+                setColorToEdit({ ...colorToEdit, color: e.target.value })
+              }
+              value={colorToEdit.color}
+            />
+          </label>
+          <label>
+            hex code:
+            <input
+              onChange={e =>
+                setColorToEdit({
+                  ...colorToEdit,
+                  code: { hex: e.target.value }
+                })
+              }
+              value={colorToEdit.code.hex}
+            />
+          </label>
+          <div className="button-row">
+            <button type="submit">ADD</button>
+            <button onClick={() => setEditing(false)}>cancel</button>
+          </div>
+        </form> */}
+
+
+       
+
+
       </ul>
       {editing && (
         <form onSubmit={saveEdit}>
