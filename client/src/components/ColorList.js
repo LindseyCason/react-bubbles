@@ -23,12 +23,12 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
-
+console.log("this is E", e)
     axiosWithAuth()
     .put(`/colors/${colors.id}`, colorToEdit) //where do we get the ID from? not index
     .then(res =>{
       console.log(res.data, "resdata inside put colorlist page");
-      updateColors([...colors.filter(color => color.id !== colors.id), res.data])
+      updateColors([...colors.filter(color => color.id !== res.data.id), res.data])
     //   updateColors([...colors.filter(e => e.id !== color.id), res.data]
     //   )
       // props.history.push(`colors/${colors.id}`);
@@ -50,10 +50,9 @@ const ColorList = ({ colors, updateColors }) => {
         console.log("res inside delete", res);
     })
     .catch(error => console.log("err", error))
-    
-
 
   };
+
 
   return (
     <div className="colors-wrap">
