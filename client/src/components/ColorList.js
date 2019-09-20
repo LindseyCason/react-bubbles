@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const initialColor = {
   color: "",
@@ -7,7 +8,8 @@ const initialColor = {
 };
 
 const ColorList = ({ colors, updateColors }) => {
-  console.log(colors);
+  //^^ colors= colorList, updateColors=setColorList from bubbles page
+  console.log("colors", colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
@@ -21,10 +23,36 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+
+    axiosWithAuth()
+    .put(`/colors/${colors.id}`, colorToEdit) //where do we get the ID from? not index
+    .then(res =>{
+      console.log(res.data, "resdata inside put colorlist page");
+      updateColors([...colors.filter(color => color.id !== colors.id), res.data])
+    //   updateColors([...colors.filter(e => e.id !== color.id), res.data]
+    //   )
+      // props.history.push(`colors/${colors.id}`);
+    })
+    .catch(error => console.log("error from put req", error))
+
+
+  
+
+
   };
 
   const deleteColor = color => {
     // make a delete request to delete this color
+   
+      axiosWithAuth()
+      .delete(`/colors/${color.id}`) //this is color.id NOT COLORS
+      .then(res => { updateColors([...colors.filter(color => color.id !== res.data)]);
+        console.log("res inside delete", res);
+    })
+    .catch(error => console.log("err", error))
+    
+
+
   };
 
   return (
