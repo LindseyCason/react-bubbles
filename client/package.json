@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build", 
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -28,5 +28,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ]  
 }
